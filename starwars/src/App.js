@@ -50,7 +50,10 @@ const onClickPrev = event => {
   return (
     <div className="App">
       <h1 className="Header" 
-      style={{color: '#e0c742', textShadow: '-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black', fontSize: '3rem'}}>CHARACTERS</h1>
+      style={{
+        color: '#e0c742', 
+        textShadow: '-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black', 
+        fontSize: '3rem'}}>CHARACTERS</h1>
       <Search term={term} setTerm={setTerm} filterData={filterData} setFilterData={setFilterData} numChar={numChar} isSearching={isSearching} setIsSearching={setIsSearching} />
       <Pages pageNumber={page} onClickNext={onClickNext} onClickPrev={onClickPrev}  />
       {isSearching === false ? <Character data={charData} /> : <Character data={filterData} /> }
