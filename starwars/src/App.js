@@ -9,6 +9,8 @@ const App = () => {
   // Try to think through what state you'll need for this app before starting. Then build out
   // the state properties here.
   const [charData, setCharData] = useState([]);
+  const [numChar, setNumChar] = useState(0);
+  const [filterData, setFilterData] = useState([]);
   const [page, setPage] = useState(1);
   const [term, setTerm] = useState("");
 
@@ -21,6 +23,7 @@ const App = () => {
       .then(resolve => {
         console.log("For the empire!");
         setCharData(resolve.data.results);
+        setNumChar(resolve.data.count);
       })
       .catch(error => {
         console.log("I have a bad feeling about this... \n" + error);
@@ -42,16 +45,14 @@ const onClickPrev = event => {
     setPage(page - 1);
   }
 }
-
-console.log(charData);
   
   return (
     <div className="App">
       <h1 className="Header" 
       style={{color: '#e0c742', textShadow: '-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black', fontSize: '3rem'}}>CHARACTERS</h1>
-      <Search term={term} setTerm={setTerm} charData={charData} setCharData={setCharData} />
+      <Search term={term} setTerm={setTerm} filterData={filterData} setFilterData={setFilterData} numChar={numChar}/>
       <Pages pageNumber={page} onClickNext={onClickNext} onClickPrev={onClickPrev}  />
-      <Character data={charData}/>
+      {filterData.length === 0 ? <Character data={charData} /> : <Character data={filterData} /> }
     </div>
   );
 }

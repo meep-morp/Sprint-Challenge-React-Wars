@@ -1,17 +1,39 @@
 import React, { useEffect } from "react";
+import axios from "axios";
 
 const Search = (props) => {
-    const {term, setTerm, charData, setCharData} = props;
+    const {term, setTerm, filterData, setFilterData, numChar} = props;
+    useEffect(() => {
+        setFilterData(filterData.filter((singleChar) => {
+            // console.log(singleChar.name.toLowerCase());
+            return singleChar.name
+            .toLowerCase()
+            .includes(term)
+        }))
+    }, [term])
+
+    
+  useEffect(() => {
+    for(let i=0; i < numChar; i++) {
+        if(i === 16) {
+           continue;
+        } else {
+      axios.get(`https://swapi.py4e.com/api/people/${i + 1}/`)
+      .then(resolve => {
+
+        setFilterData([filterData.push(resolve.data)]);
+      })
+      .catch(error => {
+        console.log("that's not how the Force works! \n" + error);
+      })
+    }
+  }
+  }, [numChar]);
+
     return (
         <input type="text"
             onChange={event => {
                 setTerm(event.target.value);
-                charData.filter((singleChar) => {
-                    return setCharData(
-                            singleChar.name
-                            .toLowercase()
-                            .includes(term.toLowerCase()))
-                })
             }}
             placeholder="I don't work yet ):"
             style={{
