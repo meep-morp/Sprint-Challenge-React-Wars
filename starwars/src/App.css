@@ -1,5 +1,12 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
 .App {
   text-align: center;
+  font-family: 'News Cycle', sans-serif;
 }
 .Header {
   color: #443e3e;
