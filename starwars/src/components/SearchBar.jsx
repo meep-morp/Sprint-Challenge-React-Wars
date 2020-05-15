@@ -59,7 +59,7 @@ const Search = (props) => {
           setIsSearching(true);
         }
       }}
-      placeholder="I don't work yet ):"
+      placeholder="Search..."
       style={{
         height: "30px",
         width: "25%",
