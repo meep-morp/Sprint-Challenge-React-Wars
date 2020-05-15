@@ -28,11 +28,19 @@ const App = () => {
   }, [page]);
 
 const onClickNext = event => {
-  setPage(page + 1);
+  if (page === 9) {
+    setPage(1);
+  } else {
+    setPage(page + 1);
+  }
 }
 
 const onClickPrev = event => {
-  setPage(page - 1);
+  if (page === 1) {
+    setPage(9);
+  } else {
+    setPage(page - 1);
+  }
 }
 
 console.log(charData);
