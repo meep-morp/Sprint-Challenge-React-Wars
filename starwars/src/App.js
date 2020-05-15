@@ -9,8 +9,11 @@ const App = () => {
   // Try to think through what state you'll need for this app before starting. Then build out
   // the state properties here.
   const [charData, setCharData] = useState([]);
+  const [numChar, setNumChar] = useState(0);
+  const [filterData, setFilterData] = useState([]);
   const [page, setPage] = useState(1);
   const [term, setTerm] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
 
   // Fetch characters from the API in an effect hook. Remember, anytime you have a 
   // side effect in a component, you want to think about which state and/or props it should
@@ -21,6 +24,7 @@ const App = () => {
       .then(resolve => {
         console.log("For the empire!");
         setCharData(resolve.data.results);
+        setNumChar(resolve.data.count);
       })
       .catch(error => {
         console.log("I have a bad feeling about this... \n" + error);
@@ -42,16 +46,17 @@ const onClickPrev = event => {
     setPage(page - 1);
   }
 }
-
-console.log(charData);
   
   return (
     <div className="App">
       <h1 className="Header" 
-      style={{color: '#e0c742', textShadow: '-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black', fontSize: '3rem'}}>CHARACTERS</h1>
-      <Search term={term} setTerm={setTerm} charData={charData} setCharData={setCharData} />
+      style={{
+        color: '#e0c742', 
+        textShadow: '-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black', 
+        fontSize: '3rem'}}>CHARACTERS</h1>
+      <Search term={term} setTerm={setTerm} filterData={filterData} setFilterData={setFilterData} numChar={numChar} isSearching={isSearching} setIsSearching={setIsSearching} />
       <Pages pageNumber={page} onClickNext={onClickNext} onClickPrev={onClickPrev}  />
-      <Character data={charData}/>
+      {isSearching === false ? <Character data={charData} /> : <Character data={filterData} /> }
     </div>
   );
 }
